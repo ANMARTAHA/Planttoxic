@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Smart — Non-Medicinal Toxic Plants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1EAD9;
+    --paper-alt:#E7DEC7;
+    --ink:#2B2418;
+    --ink-soft:#6B5F49;
+    --danger:#8C2F1B;
+    --danger-dark:#6B2313;
+    --green:#3F5D3A;
+    --green-dark:#2C4128;
+    --amber:#B98A2E;
+    --line: rgba(43,36,24,0.20);
+    --line-soft: rgba(43,36,24,0.10);
+    --card:#FBF7EC;
+    --shadow: 2px 3px 0 rgba(43,36,24,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.5;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(43,36,24,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces', serif; margin:0; color:var(--ink);}
+  a{color:inherit;}
+  button{font-family:inherit;}
+  ::selection{background:var(--amber); color:var(--paper);}
+  :focus-visible{outline:2px solid var(--danger); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    max-width:1180px; margin:0 auto; padding:34px 24px 18px;
+    display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap;
+    border-bottom:3px solid var(--ink);
+  }
+  .brand{display:flex; align-items:center; gap:14px;}
+  .mark{width:46px; height:46px; flex:none;}
+  .brand h1{font-size:2.1rem; font-weight:700; letter-spacing:0.01em;}
+  .brand p{margin:2px 0 0; color:var(--ink-soft); font-size:0.95rem;}
+  .stamp{
+    border:2px solid var(--danger); color:var(--danger); font-family:'Fraunces', serif;
+    font-weight:600; font-size:0.78rem; padding:6px 10px; transform:rotate(-3deg);
+    border-radius:2px; white-space:nowrap;
+  }
+
+  /* ---------- Tabs ---------- */
+  nav.tabs{
+    max-width:1180px; margin:0 auto; padding:0 24px;
+    display:flex; gap:6px; flex-wrap:wrap; margin-top:14px;
+  }
+  nav.tabs button{
+    background:var(--paper-alt); border:2px solid var(--ink); border-bottom:none;
+    padding:10px 18px; font-size:0.95rem; font-weight:600; cursor:pointer;
+    color:var(--ink-soft); border-radius:8px 8px 0 0; position:relative; top:2px;
+  }
+  nav.tabs button.active{
+    background:var(--card); color:var(--ink); top:0; border-bottom:2px solid var(--card);
+  }
+  nav.tabs button:hover{color:var(--danger);}
+
+  main{max-width:1180px; margin:0 auto; padding:26px 24px 60px; border:2px solid var(--ink); border-top:none; background:var(--card); min-height:60vh;}
+  section.panel{display:none;}
+  section.panel.active{display:block; animation:fadein .25s ease;}
+  @keyframes fadein{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+  section.panel h2{font-size:1.5rem; margin-bottom:4px;}
+  .panel-sub{color:var(--ink-soft); font-size:0.95rem; margin-bottom:22px;}
+
+  /* ---------- Overview ---------- */
+  .rules-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:14px;}
+  .rule-card{
+    border:1px solid var(--line); background:var(--paper); padding:16px 16px 16px 50px; position:relative; border-radius:4px;
+  }
+  .rule-card .num{
+    position:absolute; left:12px; top:14px; font-family:'Fraunces', serif; font-weight:700;
+    color:var(--danger); font-size:1.3rem; width:26px; text-align:center;
+  }
+  .rule-card h4{font-size:1rem; margin-bottom:4px;}
+  .rule-card p{margin:0; font-size:0.9rem; color:var(--ink-soft);}
+
+  /* ---------- Diagrams ---------- */
+  .diagram-block{margin-bottom:36px; border-top:1px dashed var(--line); padding-top:22px;}
+  .diagram-block:first-of-type{border-top:none; padding-top:0;}
+  .diagram-block h3{font-size:1.15rem; margin-bottom:2px;}
+  .diagram-block .hint{color:var(--ink-soft); font-size:0.87rem; margin-bottom:14px;}
+  .diagram-layout{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start;}
+  .node-col{display:flex; flex-direction:column; gap:8px; min-width:210px;}
+  .node-btn{
+    text-align:left; border:2px solid var(--ink); background:var(--paper); padding:10px 12px;
+    border-radius:6px; cursor:pointer; font-weight:600; font-size:0.9rem; color:var(--ink);
+  }
+  .node-btn small{display:block; font-weight:400; color:var(--ink-soft); font-size:0.78rem; margin-top:2px;}
+  .node-btn.active{background:var(--danger); color:var(--paper); border-color:var(--danger-dark);}
+  .detail-pane{
+    flex:1; min-width:260px; border:1px solid var(--line); background:var(--paper); border-radius:6px;
+    padding:16px 18px; min-height:150px;
+  }
+  .detail-pane .placeholder{color:var(--ink-soft); font-style:italic;}
+  .detail-pane ul{margin:8px 0 0; padding-left:18px;}
+  .detail-pane li{margin-bottom:6px; font-size:0.92rem;}
+
+  .bar-chart{display:flex; flex-direction:column; gap:8px;}
+  .bar-row{display:grid; grid-template-columns:150px 1fr; align-items:center; gap:10px; cursor:pointer; padding:4px; border-radius:4px;}
+  .bar-row:hover{background:var(--paper-alt);}
+  .bar-row .label{font-size:0.85rem; font-weight:600; text-align:right;}
+  .bar-track{background:var(--paper-alt); border-radius:3px; overflow:hidden; height:20px; border:1px solid var(--line);}
+  .bar-fill{height:100%; background:linear-gradient(90deg, var(--amber), var(--danger)); border-radius:2px 0 0 2px;}
+  .bar-row.active .bar-track{outline:2px solid var(--ink);}
+
+  .zone-diagram{display:flex; gap:22px; flex-wrap:wrap; align-items:flex-start;}
+  .zone-svg-wrap{flex:none;}
+  .zone-svg-wrap svg{width:220px; height:280px;}
+  .zone-hot{cursor:pointer; transition:opacity .15s;}
+  .zone-hot:hover, .zone-hot.active{opacity:0.65;}
+
+  /* ---------- Mini map ---------- */
+  .map-layout{display:flex; gap:0; border:1px solid var(--line); border-radius:6px; overflow:hidden; min-height:420px;}
+  .map-list{width:38%; min-width:200px; background:var(--paper); border-right:1px solid var(--line); max-height:520px; overflow-y:auto;}
+  .map-list button{
+    display:block; width:100%; text-align:left; background:none; border:none; border-bottom:1px solid var(--line-soft);
+    padding:12px 16px; font-size:0.92rem; font-weight:600; cursor:pointer; color:var(--ink);
+  }
+  .map-list button:hover{background:var(--paper-alt);}
+  .map-list button.active{background:var(--danger); color:var(--paper);}
+  .map-detail{flex:1; padding:22px 24px; background:var(--card);}
+  .map-detail .empty{color:var(--ink-soft); font-style:italic;}
+  .map-detail h3{font-size:1.3rem;}
+  .map-detail .latin{font-style:italic; color:var(--ink-soft); margin-bottom:14px; font-size:0.95rem;}
+  .map-detail dl{display:grid; grid-template-columns:120px 1fr; gap:8px 14px; margin:0;}
+  .map-detail dt{font-weight:700; font-size:0.85rem; color:var(--danger);}
+  .map-detail dd{margin:0; font-size:0.92rem;}
+  .map-detail .note{margin-top:16px; padding-top:14px; border-top:1px dashed var(--line); font-size:0.88rem; color:var(--ink-soft);}
+
+  /* ---------- Difficulty level selector (Flash Cards + Quiz Bank) ---------- */
+  .level-bar{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center;}
+  .level-bar .level-label{font-size:0.82rem; font-weight:600; color:var(--ink-soft); margin-right:2px;}
+  .level-btn{position:relative;}
+  .level-btn .lvl-tag{display:block; font-weight:700;}
+  .level-btn .lvl-count{display:block; font-weight:400; font-size:0.76rem; opacity:0.8;}
+  .level-btn.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .level-btn[data-level="easy"].active{background:var(--green); border-color:var(--green-dark);}
+  .level-btn[data-level="medium"].active{background:var(--amber); border-color:var(--ink);}
+  .level-btn[data-level="hard"].active{background:var(--danger); border-color:var(--danger-dark);}
+
+  /* ---------- Flashcards ---------- */
+  .fc-bar{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;}
+  .fc-count{font-size:0.9rem; color:var(--ink-soft); font-weight:600;}
+  .fc-stage{display:flex; justify-content:center; margin:10px 0 22px;}
+  .flashcard{
+    width:100%; max-width:560px; height:230px; perspective:1200px; cursor:pointer;
+  }
+  .flashcard-inner{
+    position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;
+  }
+  .flashcard.flipped .flashcard-inner{transform:rotateY(180deg);}
+  .fc-face{
+    position:absolute; inset:0; backface-visibility:hidden; border:2px solid var(--ink); border-radius:10px;
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:26px;
+    background:var(--paper); box-shadow:var(--shadow);
+  }
+  .fc-face.back{transform:rotateY(180deg); background:var(--green); color:var(--paper); border-color:var(--green-dark);}
+  .fc-tag{position:absolute; top:12px; left:14px; font-size:0.72rem; letter-spacing:0.03em; color:var(--ink-soft);}
+  .fc-face.back .fc-tag{color:rgba(241,234,217,0.75);}
+  .fc-text{font-family:'Fraunces', serif; font-size:1.15rem; font-weight:500;}
+  .fc-controls{display:flex; justify-content:center; gap:10px; flex-wrap:wrap;}
+
+  /* ---------- Quiz ---------- */
+  .quiz-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;}
+  .quiz-score{font-weight:700; color:var(--danger);}
+  .quiz-card{border:2px solid var(--ink); border-radius:8px; padding:22px 22px 18px; background:var(--paper); max-width:640px; margin:0 auto;}
+  .quiz-q{font-family:'Fraunces', serif; font-size:1.15rem; margin-bottom:16px;}
+  .quiz-options{display:flex; flex-direction:column; gap:10px;}
+  .quiz-opt{
+    text-align:left; border:2px solid var(--line); background:var(--card); padding:11px 14px; border-radius:6px;
+    cursor:pointer; font-size:0.94rem;
+  }
+  .quiz-opt:hover{border-color:var(--ink);}
+  .quiz-opt.correct{background:var(--green); border-color:var(--green-dark); color:var(--paper); font-weight:600;}
+  .quiz-opt.wrong{background:var(--danger); border-color:var(--danger-dark); color:var(--paper); font-weight:600;}
+  .quiz-opt[disabled]{cursor:default;}
+  .quiz-nav{display:flex; justify-content:space-between; margin-top:18px; gap:10px; flex-wrap:wrap;}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    border:2px solid var(--ink); background:var(--paper); padding:9px 16px; border-radius:6px; font-weight:600;
+    cursor:pointer; font-size:0.88rem;
+  }
+  .btn:hover{background:var(--ink); color:var(--paper);}
+  .btn.primary{background:var(--danger); color:var(--paper); border-color:var(--danger-dark);}
+  .btn.primary:hover{background:var(--danger-dark);}
+  .btn[disabled]{opacity:0.4; cursor:not-allowed;}
+  .btn[disabled]:hover{background:var(--paper); color:var(--ink);}
+
+  footer{max-width:1180px; margin:0 auto; padding:18px 24px 40px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; color:var(--ink-soft); font-size:0.82rem;}
+
+  @media (max-width:720px){
+    .map-layout{flex-direction:column;}
+    .map-list{width:100%; max-height:220px; border-right:none; border-bottom:1px solid var(--line);}
+    .zone-diagram{flex-direction:column; align-items:center;}
+    .flashcard{max-width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 4C15 10 9 18 9 26c0 8.3 6.7 15 15 15s15-6.7 15-15c0-8-6-16-15-22Z" fill="#3F5D3A"/>
+      <path d="M24 12c-4 4-7 9-7 13.5C17 30.6 20.1 34 24 34s7-3.4 7-8.5c0-4.5-3-9.5-7-13.5Z" fill="#F1EAD9"/>
+      <circle cx="24" cy="24" r="2.6" fill="#8C2F1B"/>
+    </svg>
+    <div>
+      <h1>Study Smart</h1>
+      <p>Non-Medicinal Toxic Plants — a self-study companion</p>
+    </div>
+  </div>
+  <div class="stamp">handle with care</div>
+</div>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="overview" class="active">Overview</button>
+  <button data-tab="diagrams">Diagrams</button>
+  <button data-tab="minimap">Mini Map</button>
+  <button data-tab="flashcards">Flash Cards</button>
+  <button data-tab="quiz">Quiz Bank</button>
+</nav>
+
+<main>
+
+  <!-- ===== OVERVIEW ===== -->
+  <section class="panel active" id="panel-overview">
+    <h2>The short version</h2>
+    <p class="panel-sub">Ten rules that cover most of what you need to know before diving into the details.</p>
+    <div class="rules-grid" id="rulesGrid"></div>
+  </section>
+
+  <!-- ===== DIAGRAMS ===== -->
+  <section class="panel" id="panel-diagrams">
+    <h2>See the patterns</h2>
+    <p class="panel-sub">Click through each figure — nothing here is static.</p>
+
+    <div class="diagram-block">
+      <h3>Mechanism map</h3>
+      <p class="hint">Select a mechanism to see which plants act that way and what it does to the body.</p>
+      <div class="diagram-layout">
+        <div class="node-col" id="mechNodes"></div>
+        <div class="detail-pane" id="mechDetail"><p class="placeholder">Choose a mechanism on the left.</p></div>
+      </div>
+    </div>
+
+    <div class="diagram-block">
+      <h3>Relative danger</h3>
+      <p class="hint">Bars are a rough teaching scale (1 = mild, 5 = potentially lethal in small amounts). Click a bar for the reasoning.</p>
+      <div class="diagram-layout">
+        <div class="bar-chart" id="barChart" style="flex:1; min-width:280px;"></div>
+        <div class="detail-pane" id="barDetail" style="max-width:320px;"><p class="placeholder">Choose a plant on the left.</p></div>
+      </div>
+    </div>
+
+    <div class="diagram-block">
+      <h3>Where the toxin hides</h3>
+      <p class="hint">Click a region of the plant to list which species carry their toxin there.</p>
+      <div class="zone-diagram">
+        <div class="zone-svg-wrap">
+          <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
+            <ellipse class="zone-hot" data-zone="berr" cx="70" cy="55" rx="16" ry="16" fill="#8C2F1B"/>
+            <ellipse class="zone-hot" data-zone="berr" cx="150" cy="45" rx="14" ry="14" fill="#8C2F1B"/>
+            <path class="zone-hot" data-zone="leaf" d="M110 40 C60 60 40 110 90 140 C140 110 160 60 110 40Z" fill="#3F5D3A"/>
+            <path class="zone-hot" data-zone="leaf" d="M110 40 C160 60 180 110 130 140 C80 110 60 60 110 40Z" fill="#4d7346" opacity="0.9"/>
+            <rect class="zone-hot" data-zone="stem" x="103" y="138" width="14" height="90" fill="#B98A2E"/>
+            <circle class="zone-hot" data-zone="bulb" cx="110" cy="240" r="26" fill="#6B5F49"/>
+            <circle class="zone-hot" data-zone="seed" cx="95" cy="230" r="6" fill="#2B2418"/>
+            <circle class="zone-hot" data-zone="seed" cx="122" cy="234" r="6" fill="#2B2418"/>
+            <text x="110" y="16" text-anchor="middle" font-size="11" font-family="Work Sans" fill="#2B2418">click a part</text>
+          </svg>
+        </div>
+        <div class="detail-pane" id="zoneDetail" style="flex:1; min-width:260px;"><p class="placeholder">Choose a plant region.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MINI MAP ===== -->
+  <section class="panel" id="panel-minimap">
+    <h2>Species index</h2>
+    <p class="panel-sub">Tap a name on the left — its full record opens here on the right.</p>
+    <div class="map-layout">
+      <div class="map-list" id="mapList"></div>
+      <div class="map-detail" id="mapDetail"><p class="empty">Select a plant to view its record.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== FLASHCARDS ===== -->
+  <section class="panel" id="panel-flashcards">
+    <h2>Flash cards</h2>
+    <p class="panel-sub">Click a card to flip it. <span id="fcTotalLabel"></span></p>
+    <div class="level-bar" id="fcLevelBar">
+      <span class="level-label">Difficulty:</span>
+      <button class="btn level-btn active" data-level="easy"><span class="lvl-tag">Level 1 · Easy</span><span class="lvl-count">60 cards</span></button>
+      <button class="btn level-btn" data-level="medium"><span class="lvl-tag">Level 2 · Medium</span><span class="lvl-count">50 cards</span></button>
+      <button class="btn level-btn" data-level="hard"><span class="lvl-tag">Level 3 · Hard</span><span class="lvl-count">40 cards</span></button>
+    </div>
+    <div class="fc-bar">
+      <span class="fc-count" id="fcCount"></span>
+      <button class="btn" id="fcShuffle">Shuffle</button>
+    </div>
+    <div class="fc-stage">
+      <div class="flashcard" id="flashcard">
+        <div class="flashcard-inner">
+          <div class="fc-face front"><span class="fc-tag">question</span><div class="fc-text" id="fcFront"></div></div>
+          <div class="fc-face back"><span class="fc-tag">answer</span><div class="fc-text" id="fcBack"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="btn" id="fcPrev">← Previous</button>
+      <button class="btn primary" id="fcFlip">Flip card</button>
+      <button class="btn" id="fcNext">Next →</button>
+    </div>
+  </section>
+
+  <!-- ===== QUIZ ===== -->
+  <section class="panel" id="panel-quiz">
+    <h2>Quiz bank</h2>
+    <p class="panel-sub" id="quizSub"></p>
+    <div class="level-bar" id="quizLevelBar">
+      <span class="level-label">Difficulty:</span>
+      <button class="btn level-btn active" data-level="easy"><span class="lvl-tag">Level 1 · Easy</span><span class="lvl-count">60 questions</span></button>
+      <button class="btn level-btn" data-level="medium"><span class="lvl-tag">Level 2 · Medium</span><span class="lvl-count">50 questions</span></button>
+      <button class="btn level-btn" data-level="hard"><span class="lvl-tag">Level 3 · Hard</span><span class="lvl-count">40 questions</span></button>
+    </div>
+    <div class="quiz-top">
+      <span id="quizProgress"></span>
+      <span class="quiz-score" id="quizScore"></span>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q" id="quizQ"></div>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-nav">
+        <button class="btn" id="quizRestart">Restart</button>
+        <button class="btn primary" id="quizNext" disabled>Next question →</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>© Anmar Taha</span>
+  <span>Study Smart — for learning purposes, not medical or emergency guidance.</span>
+</footer>
+
+<script>
+/* ================= DATA ================= */
+const DB = [
+  {name:"Castor Bean", latin:"Ricinus communis", category:"Ornamental & Wild", part:"Seeds", toxin:"Ricin", mechClass:"Ribosome inhibition", mechanism:"Blocks protein synthesis by disabling ribosomes inside cells", symptoms:"Nausea, vomiting, GI bleeding, multi-organ failure", severity:5, group:"D", note:"Considered the most poisonous common plant substance; no antidote exists."},
+  {name:"Poison Ivy / Oak", latin:"Toxicodendron spp.", category:"Ornamental & Wild", part:"Leaves and sap", toxin:"Urushiol", mechClass:"Contact irritant", mechanism:"Triggers a delayed allergic skin reaction on contact", symptoms:"Itching, blistering rash, dermatitis", severity:2, group:"E", note:"Rarely dangerous but one of the most common causes of plant-related clinic visits."},
+  {name:"Oleander", latin:"Nerium oleander", category:"Ornamental & Wild", part:"All parts", toxin:"Cardiac glycosides (oleandrin)", mechClass:"Cardiac glycoside", mechanism:"Inhibits the Na+/K+-ATPase pump in heart muscle", symptoms:"Vomiting, drowsiness, dangerous heart rhythms", severity:5, group:"A", note:"A single leaf can be dangerous to a small child or a pet."},
+  {name:"Lily of the Valley", latin:"Convallaria majalis", category:"Ornamental & Wild", part:"All parts", toxin:"Cardiac glycosides (convallatoxin)", mechClass:"Cardiac glycoside", mechanism:"Inhibits the Na+/K+-ATPase pump in heart muscle", symptoms:"Nausea, irregular heartbeat, confusion", severity:5, group:"A", note:"Especially dangerous for cats and dogs."},
+  {name:"Foxglove", latin:"Digitalis purpurea", category:"Ornamental & Wild", part:"Leaves", toxin:"Cardiac glycosides (digitoxin)", mechClass:"Cardiac glycoside", mechanism:"Inhibits the Na+/K+-ATPase pump in heart muscle", symptoms:"Nausea, visual disturbances, arrhythmia", severity:5, group:"A", note:"Source of digoxin, a medicine that is toxic outside a controlled dose."},
+  {name:"Rhododendron / Azalea", latin:"Rhododendron spp.", category:"Ornamental & Wild", part:"Leaves and nectar", toxin:"Grayanotoxins", mechClass:"Sodium channel disruption", mechanism:"Keeps sodium channels open, over-stimulating cells", symptoms:"Vomiting, low blood pressure, heart block", severity:4, group:"C", note:"Honey made from the nectar, sometimes called mad honey, can also cause poisoning."},
+  {name:"Daffodil / Narcissus", latin:"Narcissus spp.", category:"Ornamental & Wild", part:"Bulbs", toxin:"Lycorine and related alkaloids", mechClass:"GI irritant", mechanism:"Irritates the lining of the digestive tract", symptoms:"Severe vomiting and diarrhea", severity:2, group:"E", note:"Bulbs are sometimes mistaken for onions in storage."},
+  {name:"Apple, Peach, Cherry", latin:"Prunus spp.", category:"Edible plant, toxic part", part:"Seeds and pits", toxin:"Amygdalin", mechClass:"Cyanide release", mechanism:"Enzymes convert amygdalin into hydrogen cyanide when chewed", symptoms:"Headache, dizziness, in large amounts respiratory failure", severity:3, group:"B", note:"The fruit flesh is safe; only the crushed seed carries the risk."},
+  {name:"Rhubarb", latin:"Rheum rhabarbarum", category:"Edible plant, toxic part", part:"Leaves", toxin:"Oxalic acid", mechClass:"Mechanical and metabolic irritant", mechanism:"Binds calcium and can damage kidney tissue", symptoms:"Kidney pain, vomiting, in severe cases renal failure", severity:3, group:"E", note:"Only the leaf blade is toxic; the stalk is the edible part."},
+  {name:"Potato", latin:"Solanum tuberosum", category:"Edible plant, toxic part", part:"Green skin and sprouts", toxin:"Solanine and chaconine", mechClass:"Glycoalkaloid toxicity", mechanism:"Disrupts cell membranes and nerve signaling", symptoms:"Nausea, headache, in severe cases neurological symptoms", severity:2, group:"E", note:"Light exposure turns the skin green and raises toxin levels."},
+  {name:"Tomato", latin:"Solanum lycopersicum", category:"Edible plant, toxic part", part:"Leaves, stems, unripe fruit", toxin:"Solanine", mechClass:"Glycoalkaloid toxicity", mechanism:"Disrupts cell membranes and nerve signaling", symptoms:"Mild digestive upset", severity:1, group:"E", note:"Ripening breaks down most of the solanine in the fruit."},
+  {name:"Raw Kidney / Lima Beans", latin:"Phaseolus spp.", category:"Edible plant, toxic part", part:"Raw seeds", toxin:"Phytohaemagglutinin and linamarin", mechClass:"Lectin toxicity", mechanism:"Lectins damage the gut lining while linamarin can release cyanide", symptoms:"Severe vomiting and diarrhea within hours", severity:3, group:"D", note:"Thorough boiling destroys the toxin; a slow cooker may not reach a high enough temperature."},
+  {name:"Nutmeg", latin:"Myristica fragrans", category:"Edible plant, toxic part", part:"Seed (the spice)", toxin:"Myristicin", mechClass:"Psychoactive toxin", mechanism:"Metabolized into compounds that overstimulate the nervous system", symptoms:"Hallucinations, rapid heartbeat, in large doses psychosis", severity:2, group:"C", note:"Toxic only in doses far beyond normal culinary use."},
+  {name:"Deadly Nightshade", latin:"Atropa belladonna", category:"Classic toxicology", part:"Berries and leaves", toxin:"Tropane alkaloids (atropine)", mechClass:"Anticholinergic", mechanism:"Blocks acetylcholine receptors throughout the body", symptoms:"Delirium, dilated pupils, fever, hallucinations", severity:5, group:"C", note:"Its name is linked to one of the Fates in Greek mythology."},
+  {name:"Dieffenbachia", latin:"Dieffenbachia spp.", category:"Classic toxicology", part:"Leaves and stem sap", toxin:"Calcium oxalate crystals", mechClass:"Mechanical irritant", mechanism:"Needle-shaped crystals physically pierce soft tissue", symptoms:"Burning pain, swelling of the mouth and throat", severity:2, group:"E", note:"Sometimes called dumb cane, because swelling can briefly stop speech."},
+  {name:"Ragwort", latin:"Senecio spp.", category:"Classic toxicology", part:"Whole plant", toxin:"Pyrrolizidine alkaloids", mechClass:"Hepatotoxic", mechanism:"Alkaloids convert into reactive compounds inside the liver", symptoms:"Chronic liver damage, veno-occlusive disease", severity:3, group:"C", note:"Toxicity often builds up slowly rather than from one exposure."},
+  {name:"Poison Hemlock", latin:"Conium maculatum", category:"Classic toxicology", part:"Whole plant", toxin:"Coniine", mechClass:"Neurotoxic (nicotinic)", mechanism:"Overstimulates then paralyzes nicotinic receptors", symptoms:"Trembling, ascending paralysis, respiratory failure", severity:5, group:"C", note:"Famously used to execute Socrates."},
+  {name:"Cassava", latin:"Manihot esculenta", category:"Classic toxicology", part:"Raw roots and leaves", toxin:"Cyanogenic glycosides (linamarin)", mechClass:"Cyanide release", mechanism:"Enzymes convert linamarin into hydrogen cyanide", symptoms:"Weakness, respiratory failure", severity:4, group:"B", note:"A dietary staple in many countries once it is properly processed."}
+];
+
+const GROUPS = {
+  A:{title:"Cardiac glycosides", desc:"Inhibit the Na+/K+-ATPase pump in heart muscle, which can trigger dangerous arrhythmias."},
+  B:{title:"Cyanogenic compounds", desc:"Release hydrogen cyanide once enzymes break the compound down, usually after chewing or crushing."},
+  C:{title:"Neurotoxins", desc:"Interfere with nerve signaling, receptors, or (for pyrrolizidine alkaloids) organ tissue."},
+  D:{title:"Proteins and lectins", desc:"Damage cells directly, either by halting protein synthesis or attacking the gut lining."},
+  E:{title:"Irritants", desc:"Cause mechanical or chemical irritation to skin, mouth, gut, or kidneys rather than a systemic poisoning."}
+};
+
+const RULES = [
+  {t:"Looks are not proof", d:"Many toxic plants closely resemble edible ones — never judge safety by appearance alone."},
+  {t:"The dose makes the poison", d:"Amount matters. Nutmeg is a spice in small amounts and a toxin in large ones."},
+  {t:"One plant, many parts", d:"Toxicity can differ by part: potato tubers are food, their green sprouts are not."},
+  {t:"Cooking helps sometimes", d:"Heat destroys lectins in raw beans, but does nothing to ricin or cardiac glycosides."},
+  {t:"Cardiac glycosides stop the pump", d:"Oleander, foxglove, and lily of the valley all disable the same heart-cell pump."},
+  {t:"Cyanide hides in a sugar", d:"Cyanogenic glycosides release cyanide only after enzymes break them apart."},
+  {t:"Ricin has no antidote", d:"It shuts down protein synthesis at the ribosome — treatment is supportive only."},
+  {t:"Contact toxins need no ingestion", d:"Urushiol in poison ivy causes harm through skin contact alone."},
+  {t:"Pets are more vulnerable", d:"Smaller body mass means common house and garden plants can be riskier for animals than people."},
+  {t:"Four broad toxin families", d:"Most cases here trace back to alkaloids, glycosides, lectins/proteins, or irritant crystals and oils."}
+];
+
+/* ================= OVERVIEW ================= */
+const rulesGrid = document.getElementById('rulesGrid');
+RULES.forEach((r,i)=>{
+  const div = document.createElement('div');
+  div.className='rule-card';
+  div.innerHTML = `<span class="num">${i+1}</span><h4>${r.t}</h4><p>${r.d}</p>`;
+  rulesGrid.appendChild(div);
+});
+
+/* ================= TABS ================= */
+const tabButtons = document.querySelectorAll('#tabs button');
+tabButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ================= DIAGRAM 1: mechanism map ================= */
+const mechNodes = document.getElementById('mechNodes');
+const mechDetail = document.getElementById('mechDetail');
+Object.keys(GROUPS).forEach(key=>{
+  const g = GROUPS[key];
+  const count = DB.filter(d=>d.group===key).length;
+  const b = document.createElement('button');
+  b.className='node-btn';
+  b.dataset.group = key;
+  b.innerHTML = `${g.title}<small>${count} species in this set</small>`;
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#mechNodes .node-btn').forEach(n=>n.classList.remove('active'));
+    b.classList.add('active');
+    const members = DB.filter(d=>d.group===key);
+    mechDetail.innerHTML = `<h4>${g.title}</h4><p>${g.desc}</p><ul>` +
+      members.map(m=>`<li><strong>${m.name}</strong> — ${m.symptoms.toLowerCase()}</li>`).join('') + `</ul>`;
+  });
+  mechNodes.appendChild(b);
+});
+
+/* ================= DIAGRAM 2: severity bar chart ================= */
+const barChart = document.getElementById('barChart');
+const barDetail = document.getElementById('barDetail');
+const sorted = [...DB].sort((a,b)=>b.severity-a.severity);
+sorted.forEach(item=>{
+  const row = document.createElement('div');
+  row.className='bar-row';
+  row.innerHTML = `<span class="label">${item.name}</span>
+    <div class="bar-track"><div class="bar-fill" style="width:${item.severity*20}%"></div></div>`;
+  row.addEventListener('click', ()=>{
+    document.querySelectorAll('.bar-row').forEach(r=>r.classList.remove('active'));
+    row.classList.add('active');
+    barDetail.innerHTML = `<h4>${item.name}</h4><p><strong>Toxin:</strong> ${item.toxin}</p><p>${item.note}</p>`;
+  });
+  barChart.appendChild(row);
+});
+
+/* ================= DIAGRAM 3: plant-zone map ================= */
+const zoneMatch = {
+  seed:["seed","pit"],
+  leaf:["leaf","leaves"],
+  stem:["stem","sap"],
+  bulb:["bulb","root"],
+  berr:["berr","all parts","fruit"]
+};
+const zoneDetail = document.getElementById('zoneDetail');
+document.querySelectorAll('.zone-hot').forEach(z=>{
+  z.addEventListener('click', ()=>{
+    document.querySelectorAll('.zone-hot').forEach(x=>x.classList.remove('active'));
+    z.classList.add('active');
+    const keys = zoneMatch[z.dataset.zone];
+    const matches = DB.filter(d=> keys.some(k=> d.part.toLowerCase().includes(k)));
+    zoneDetail.innerHTML = matches.length
+      ? `<ul>${matches.map(m=>`<li><strong>${m.name}</strong> — ${m.part.toLowerCase()}, contains ${m.toxin.toLowerCase()}</li>`).join('')}</ul>`
+      : `<p class="placeholder">No matches in this set.</p>`;
+  });
+});
+
+/* ================= MINI MAP ================= */
+const mapList = document.getElementById('mapList');
+const mapDetail = document.getElementById('mapDetail');
+DB.forEach((item,i)=>{
+  const b = document.createElement('button');
+  b.textContent = item.name;
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('.map-list button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    mapDetail.innerHTML = `
+      <h3>${item.name}</h3>
+      <p class="latin">${item.latin} · ${item.category}</p>
+      <dl>
+        <dt>Toxic part</dt><dd>${item.part}</dd>
+        <dt>Toxin</dt><dd>${item.toxin}</dd>
+        <dt>Mechanism</dt><dd>${item.mechanism}</dd>
+        <dt>Symptoms</dt><dd>${item.symptoms}</dd>
+        <dt>Severity</dt><dd>${item.severity} / 5</dd>
+      </dl>
+      <p class="note">${item.note}</p>`;
+  });
+  mapList.appendChild(b);
+});
+
+/* ================= HELPERS ================= */
+function sampleUnique(arr, exclude){
+  return [...new Set(arr)].filter(v=>v!==exclude);
+}
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+/* =========================================================================
+   FLASH CARDS + QUIZ BANK — three difficulty tiers
+   Level 1 (Easy)   — direct, single-fact recall straight from the source
+   Level 2 (Medium) — mechanism / symptom / toxin-class recall, one small step
+                       of connection beyond a bare fact
+   Level 3 (Hard)   — integrative, comparative and clinical-reasoning items
+                       that require linking several plants, mechanisms, or
+                       the underlying pharmacology to answer
+   ========================================================================= */
+
+/* ---------------- LEVEL 1 · EASY (60 / 60) ---------------- */
+let EASY_FLASHCARDS = [];
+DB.forEach(it=>{
+  EASY_FLASHCARDS.push({front:`Which toxic compound is found in ${it.name} (${it.latin})?`, back:it.toxin});
+  EASY_FLASHCARDS.push({front:`Which part of ${it.name} carries the toxin?`, back:it.part});
+  EASY_FLASHCARDS.push({front:`How is ${it.name} classified in this study set?`, back:it.category});
+});
+DB.slice(0,6).forEach(it=>{
+  EASY_FLASHCARDS.push({front:`What is the scientific (Latin) name of ${it.name}?`, back:it.latin});
+});
+
+let EASY_QUIZ = [];
+const easyTemplates = [
+  {field:'toxin', text:it=>`Which toxin is found in ${it.name}?`},
+  {field:'part',  text:it=>`Which part of the ${it.name} plant is toxic?`},
+  {field:'latin', text:it=>`What is the scientific (Latin) name of ${it.name}?`}
+];
+DB.forEach(it=>{
+  easyTemplates.forEach(t=>{
+    const correct = it[t.field];
+    const distractors = shuffle(sampleUnique(DB.map(d=>d[t.field]), correct)).slice(0,3);
+    if(distractors.length===3) EASY_QUIZ.push({question:t.text(it), correct, distractors});
+  });
+});
+DB.slice(0,6).forEach(it=>{
+  const correct = it.symptoms;
+  const distractors = shuffle(sampleUnique(DB.map(d=>d.symptoms), correct)).slice(0,3);
+  if(distractors.length===3) EASY_QUIZ.push({question:`What is a key symptom of ${it.name} poisoning?`, correct, distractors});
+});
+
+/* ---------------- LEVEL 2 · MEDIUM (50 / 50) ---------------- */
+let MEDIUM_FLASHCARDS = [];
+DB.forEach(it=>{
+  MEDIUM_FLASHCARDS.push({front:`What is the primary mechanism of toxicity for ${it.name}?`, back:it.mechanism});
+  MEDIUM_FLASHCARDS.push({front:`What is a key clinical symptom of ${it.name} poisoning?`, back:it.symptoms});
+});
+DB.slice(0,14).forEach(it=>{
+  const g = GROUPS[it.group];
+  MEDIUM_FLASHCARDS.push({front:`${it.name} belongs to which toxin mechanism class, and what does that class generally do?`, back:`${g.title} — ${g.desc}`});
+});
+
+let MEDIUM_QUIZ = [];
+const mediumTemplates = [
+  {field:'mechanism', text:it=>`What is the primary toxic mechanism of ${it.name}?`},
+  {field:'symptoms',  text:it=>`Which of the following best describes a key symptom of ${it.name} poisoning?`}
+];
+DB.forEach(it=>{
+  mediumTemplates.forEach(t=>{
+    const correct = it[t.field];
+    const distractors = shuffle(sampleUnique(DB.map(d=>d[t.field]), correct)).slice(0,3);
+    if(distractors.length===3) MEDIUM_QUIZ.push({question:t.text(it), correct, distractors});
+  });
+});
+DB.slice(0,14).forEach(it=>{
+  const correct = GROUPS[it.group].title;
+  const distractors = shuffle(sampleUnique(Object.values(GROUPS).map(g=>g.title), correct)).slice(0,3);
+  if(distractors.length===3) MEDIUM_QUIZ.push({question:`${it.name} belongs to which broad toxin mechanism class?`, correct, distractors});
+});
+
+/* ---------------- LEVEL 3 · HARD (40 / 40) ---------------- */
+let HARD_FLASHCARDS = [];
+DB.forEach(it=>{
+  HARD_FLASHCARDS.push({
+    front:`Trace the toxicity of ${it.name} from compound to clinical effect: name the toxin, its mechanism, and the resulting symptoms.`,
+    back:`${it.toxin} → ${it.mechanism} → ${it.symptoms}`
+  });
+});
+const HARD_CURATED = [
+  {q:"Name the three plants in this set that act by inhibiting the Na+/K+-ATPase pump, and state the toxin class they share.",
+   a:"Oleander, Lily of the Valley, and Foxglove — all cardiac glycosides."},
+  {q:"Which two plants in this set release toxicity through enzymatic conversion to hydrogen cyanide, and what is this toxin class called?",
+   a:"Apple/Peach/Cherry pits and Cassava — cyanogenic glycosides."},
+  {q:"Contrast the toxic mechanism of Castor Bean with that of Raw Kidney/Lima Beans, even though both involve plant proteins.",
+   a:"Ricin (castor bean) halts protein synthesis by disabling ribosomes inside cells; the lectin phytohaemagglutinin in raw beans instead damages the lining of the gut directly."},
+  {q:"Dieffenbachia and Rhubarb both involve oxalate, yet harm the body differently. Explain the distinction.",
+   a:"Dieffenbachia's calcium oxalate crystals mechanically puncture oral tissue on contact; rhubarb's oxalic acid acts systemically, binding calcium in the bloodstream and straining the kidneys."},
+  {q:"Why is ripe peach flesh safe to eat while the pit is dangerous?",
+   a:"The cyanide-releasing compound amygdalin is concentrated in the seed; the flesh carries only negligible amounts."},
+  {q:"A patient shows dilated pupils, fever, and delirium after eating dark berries. Which plant and toxin mechanism fit this picture?",
+   a:"Deadly Nightshade (Atropa belladonna) — tropane alkaloids blocking acetylcholine receptors (anticholinergic toxicity)."},
+  {q:"Explain why potato skin turning green is treated as a warning sign.",
+   a:"Greening reflects light-triggered chlorophyll production that coincides with rising levels of the glycoalkaloids solanine and chaconine."},
+  {q:"Why does thorough cooking destroy the toxin in raw kidney beans but not the toxin in oleander?",
+   a:"The bean lectin is a heat-sensitive protein that unfolds and loses its toxic shape when boiled; oleander's cardiac glycosides are heat-stable steroid-like compounds, unaffected by cooking."},
+  {q:"What historical event is poison hemlock famous for, and what receptor does its toxin act on?",
+   a:"It was used to execute Socrates; its toxin coniine overstimulates and then paralyzes nicotinic receptors."},
+  {q:"Why might pyrrolizidine alkaloid poisoning from Ragwort go unnoticed until serious liver damage has occurred?",
+   a:"It usually results from chronic, cumulative low-dose exposure rather than a single large dose, so liver injury builds silently over time."},
+  {q:"Rank these four plants by severity score, from highest to lowest: Tomato, Nutmeg, Poison Ivy/Oak, Cassava.",
+   a:"Cassava (4) is highest, then Nutmeg and Poison Ivy/Oak tie at 2, with Tomato lowest at 1."},
+  {q:"Belladonna and the cardiac glycoside plants can both cause dangerous symptoms, but through opposite receptor actions. Explain the contrast.",
+   a:"Belladonna's tropane alkaloids block acetylcholine receptors (anticholinergic), causing delirium and dry, flushed, dilated features; cardiac glycosides instead inhibit the Na+/K+-ATPase pump, directly disrupting the heart's electrical rhythm."},
+  {q:"Why is ricin considered to have no reliable antidote?",
+   a:"It permanently disables ribosomes and halts protein synthesis inside cells; treatment can only support the body while it copes, not reverse that damage."},
+  {q:"What single factor determines whether nutmeg acts as a spice or a toxin?",
+   a:"The dose — myristicin is safe in normal culinary amounts but causes hallucinations and psychosis at doses far beyond typical cooking use."},
+  {q:"Which toxin mechanism class contains the largest number of species in this set, and what unites them?",
+   a:"Irritants (Group E) — poison ivy/oak, daffodil, rhubarb, potato, tomato, and Dieffenbachia — all cause local mechanical or chemical irritation rather than systemic poisoning."},
+  {q:"Foxglove is the source of a real heart medication. Explain how the same compound class can be both medicine and poison.",
+   a:"Digitoxin/digoxin from foxglove is used at a carefully controlled dose to regulate heart rhythm; the margin between a therapeutic and a toxic dose is narrow, so the same Na+/K+-ATPase inhibition that treats the heart can also poison it."},
+  {q:"Why are pets often more vulnerable than people to common garden plants such as lily of the valley?",
+   a:"Their much smaller body mass means the same absolute quantity of toxin delivers a far higher dose per kilogram than it would in an adult human."},
+  {q:"What distinguishes Toxicodendron (poison ivy/oak) toxicity from every other entry in this set?",
+   a:"It is a contact toxin — urushiol causes an allergic skin reaction on contact alone, without needing to be ingested."},
+  {q:"Cassava is a dietary staple in some countries despite containing cyanogenic glycosides. How is it made safe?",
+   a:"Proper processing — soaking, grating, fermenting, and cooking — breaks down or removes most of the linamarin before it can release cyanide."},
+  {q:"Explain why the coniine in poison hemlock is described as first stimulating, then paralyzing, nicotinic receptors.",
+   a:"Like nicotine, coniine initially overactivates nicotinic acetylcholine receptors; sustained overstimulation eventually blocks normal signaling, producing progressive (ascending) paralysis and, in severe cases, respiratory failure."},
+  {q:"Both grayanotoxins (rhododendron/azalea) and cardiac glycosides disturb heart function, but by different means. Contrast them.",
+   a:"Grayanotoxins keep sodium channels locked open, over-stimulating cells and slowing the heart; cardiac glycosides instead block the Na+/K+-ATPase pump, disrupting the ion gradients that keep the heartbeat rhythmic."},
+  {q:"What single teaching point connects castor bean, foxglove, and raw kidney beans despite their very different toxins?",
+   a:"In each case the plant's toxin targets one specific cellular or physiological process — ribosomes, an ion pump, or the gut lining — showing that plant toxicity usually has a describable mechanism rather than being a vague 'poison.'"}
+];
+HARD_CURATED.forEach(c=> HARD_FLASHCARDS.push({front:c.q, back:c.a}));
+
+let HARD_QUIZ = [];
+DB.forEach(it=>{
+  const correct = `${it.toxin} — ${it.mechanism}`;
+  const distractors = shuffle(sampleUnique(DB.map(d=>`${d.toxin} — ${d.mechanism}`), correct)).slice(0,3);
+  if(distractors.length===3) HARD_QUIZ.push({question:`Which of the following correctly pairs the toxin and mechanism for ${it.name}?`, correct, distractors});
+});
+const HARD_QUIZ_CURATED = [
+  {question:"Which three plants in this set act by inhibiting the Na+/K+-ATPase pump?",
+   correct:"Oleander, Lily of the Valley, and Foxglove",
+   distractors:["Castor Bean, Ricin-producing seeds, and Rhubarb","Poison Hemlock, Deadly Nightshade, and Ragwort","Cassava, Apple, and Peach"]},
+  {question:"Which two plants in this set release cyanide via enzymatic breakdown of a glycoside?",
+   correct:"Apple/Peach/Cherry pits and Cassava",
+   distractors:["Castor Bean and Raw Kidney Beans","Oleander and Foxglove","Rhubarb and Dieffenbachia"]},
+  {question:"How does ricin's mechanism differ from the lectin in raw kidney beans?",
+   correct:"Ricin disables ribosomes and halts protein synthesis; the bean lectin damages the intestinal lining directly.",
+   distractors:["Ricin causes mechanical irritation; the lectin blocks the Na+/K+-ATPase pump.","Both act identically, blocking cyanide metabolism.","Ricin binds calcium in the blood; the lectin overstimulates sodium channels."]},
+  {question:"What is the key mechanistic difference between Dieffenbachia and Rhubarb toxicity, despite both involving oxalate?",
+   correct:"Dieffenbachia's crystals cause direct mechanical puncture of oral tissue; rhubarb's oxalic acid acts systemically on the kidneys.",
+   distractors:["Dieffenbachia acts systemically on the kidneys; rhubarb causes local mouth injury.","Both work by inhibiting ribosomes.","Dieffenbachia releases cyanide; rhubarb blocks acetylcholine receptors."]},
+  {question:"Why is ripe peach flesh safe while the pit is dangerous?",
+   correct:"Amygdalin, the cyanide-releasing compound, is concentrated in the pit, not the flesh.",
+   distractors:["The flesh contains a natural antidote to amygdalin.","Ripening destroys all toxins in the pit.","The pit is only toxic once it germinates into a plant."]},
+  {question:"A patient shows dilated pupils, fever, and delirium after eating dark berries. Which plant fits best?",
+   correct:"Deadly Nightshade (Atropa belladonna)",
+   distractors:["Oleander","Cassava","Rhubarb"]},
+  {question:"Why is a green potato skin treated as a warning sign?",
+   correct:"Greening coincides with rising levels of the glycoalkaloids solanine and chaconine.",
+   distractors:["Green skin means the potato has been cooked improperly.","Green skin indicates high cyanide content.","Green skin means the potato contains ricin."]},
+  {question:"Why does cooking neutralize the raw kidney bean toxin but not oleander's toxin?",
+   correct:"The bean lectin is a heat-sensitive protein; oleander's cardiac glycosides are heat-stable compounds unaffected by cooking.",
+   distractors:["Oleander's toxin evaporates at high heat, unlike the bean lectin.","Both toxins are destroyed equally by cooking.","The bean lectin is heat-stable, while oleander's toxin is heat-sensitive."]},
+  {question:"Poison hemlock is historically associated with which event, and what receptor does its toxin affect?",
+   correct:"The execution of Socrates; nicotinic acetylcholine receptors",
+   distractors:["The Salem witch trials; muscarinic receptors","The Roman poisoning of Emperor Claudius; GABA receptors","The Borgia poisonings; dopamine receptors"]},
+  {question:"Why can pyrrolizidine alkaloid (Ragwort) toxicity go unnoticed until serious liver damage occurs?",
+   correct:"It typically results from chronic, cumulative low-dose exposure rather than one large dose.",
+   distractors:["It only causes symptoms after exactly 24 hours.","It is completely painless even in acute large doses.","The liver regenerates fully regardless of exposure duration."]},
+  {question:"Rank by severity score (highest to lowest): Tomato, Nutmeg, Poison Ivy/Oak, Cassava.",
+   correct:"Cassava > Nutmeg = Poison Ivy/Oak > Tomato",
+   distractors:["Tomato > Cassava > Nutmeg > Poison Ivy/Oak","Nutmeg > Cassava > Tomato > Poison Ivy/Oak","Poison Ivy/Oak > Tomato > Cassava > Nutmeg"]},
+  {question:"How do Belladonna's tropane alkaloids and cardiac glycosides differ in their receptor action?",
+   correct:"Tropane alkaloids block acetylcholine receptors (anticholinergic); cardiac glycosides inhibit the Na+/K+-ATPase pump.",
+   distractors:["Both inhibit the same Na+/K+-ATPase pump.","Tropane alkaloids inhibit ribosomes; cardiac glycosides block acetylcholine receptors.","Both act as cyanide-releasing compounds."]},
+  {question:"Why is there no reliable antidote for ricin poisoning?",
+   correct:"Ricin permanently disables ribosomes, so treatment can only support the body, not reverse the damage.",
+   distractors:["Ricin is not actually toxic to humans in any dose.","Ricin's effects reverse spontaneously within hours.","Ricin poisoning is always treated by inducing vomiting alone."]},
+  {question:"What single factor determines whether nutmeg is a spice or a poison?",
+   correct:"The dose — myristicin is safe in normal culinary amounts but toxic at much higher doses.",
+   distractors:["Whether it is eaten raw or cooked.","The color of the nutmeg seed.","Whether it is combined with cardiac glycosides."]},
+  {question:"Which toxin mechanism class in this set has the most member species, and what unites them?",
+   correct:"Irritants — they cause local mechanical or chemical irritation rather than systemic poisoning.",
+   distractors:["Cardiac glycosides — they all inhibit the same heart pump.","Cyanogenic compounds — they all release cyanide gas.","Neurotoxins — they all block acetylcholine receptors."]},
+  {question:"How can foxglove be both a source of heart medicine and a poison?",
+   correct:"The therapeutic and toxic doses of its Na+/K+-ATPase-inhibiting compound are very close together.",
+   distractors:["The medicine and the poison are two entirely different, unrelated compounds.","Foxglove is only toxic when synthesized in a lab, not from the plant.","The medicinal form has no cardiac activity at all."]},
+  {question:"Why are pets often more vulnerable than people to plants like lily of the valley?",
+   correct:"Their smaller body mass means the same absolute dose is proportionally much larger.",
+   distractors:["Pets metabolize cardiac glycosides faster than humans.","Pets are immune to most plant toxins except lily of the valley.","Pets have a natural antidote that fades with age."]},
+  {question:"What makes poison ivy/oak's toxicity unique compared to the rest of this set?",
+   correct:"It is a contact toxin that causes a reaction from skin contact alone, without ingestion.",
+   distractors:["It is the only entry that is completely harmless.","It requires ingestion of at least 100 grams to cause any effect.","It only affects the digestive system, never the skin."]},
+  {question:"How is cassava made safe for consumption despite containing cyanogenic glycosides?",
+   correct:"Processing steps like soaking, grating, fermenting, and cooking break down most of the linamarin.",
+   distractors:["Freezing it for at least a year destroys all toxins.","It is naturally safe and requires no special preparation.","Adding vinegar neutralizes the cyanogenic compound instantly."]},
+  {question:"Why is coniine (poison hemlock) described as first stimulating, then paralyzing?",
+   correct:"It initially overactivates nicotinic receptors, and sustained overstimulation then blocks normal signaling.",
+   distractors:["It first sedates the nervous system, then causes euphoria.","It binds cardiac glycoside receptors before switching targets.","It causes paralysis first, then a brief stimulant phase."]},
+  {question:"How do grayanotoxins (rhododendron/azalea) differ from cardiac glycosides in disturbing the heart?",
+   correct:"Grayanotoxins keep sodium channels locked open; cardiac glycosides block the Na+/K+-ATPase pump.",
+   distractors:["Grayanotoxins block the Na+/K+-ATPase pump; cardiac glycosides open sodium channels.","Both work by exactly the same sodium channel mechanism.","Grayanotoxins act only on skin cells, never on the heart."]},
+  {question:"What teaching point connects castor bean, foxglove, and raw kidney beans despite their different toxins?",
+   correct:"Each toxin targets one specific cellular or physiological process rather than being a vague, generalized poison.",
+   distractors:["All three toxins are destroyed instantly by stomach acid.","All three are safe once cooked at any temperature.","All three toxins target the same Na+/K+-ATPase pump."]}
+];
+HARD_QUIZ = HARD_QUIZ.concat(HARD_QUIZ_CURATED);
+
+/* ================= FLASHCARDS — level-aware runtime ================= */
+const FLASHCARD_SETS = {easy:EASY_FLASHCARDS, medium:MEDIUM_FLASHCARDS, hard:HARD_FLASHCARDS};
+let fcLevel = 'easy';
+let FLASHCARDS = FLASHCARD_SETS[fcLevel];
+let fcOrder = FLASHCARDS.map((_,i)=>i);
+let fcIndex = 0;
+const flashcardEl = document.getElementById('flashcard');
+const fcFront = document.getElementById('fcFront');
+const fcBack = document.getElementById('fcBack');
+const fcCount = document.getElementById('fcCount');
+const fcTotalLabel = document.getElementById('fcTotalLabel');
+
+function setFcTotalLabel(){
+  fcTotalLabel.textContent = `${FLASHCARDS.length} cards in this set.`;
+}
+function renderCard(){
+  const card = FLASHCARDS[fcOrder[fcIndex]];
+  fcFront.textContent = card.front;
+  fcBack.textContent = card.back;
+  flashcardEl.classList.remove('flipped');
+  fcCount.textContent = `Card ${fcIndex+1} of ${FLASHCARDS.length}`;
+}
+flashcardEl.addEventListener('click', ()=> flashcardEl.classList.toggle('flipped'));
+document.getElementById('fcFlip').addEventListener('click', ()=> flashcardEl.classList.toggle('flipped'));
+document.getElementById('fcNext').addEventListener('click', ()=>{
+  fcIndex = (fcIndex+1) % FLASHCARDS.length; renderCard();
+});
+document.getElementById('fcPrev').addEventListener('click', ()=>{
+  fcIndex = (fcIndex-1+FLASHCARDS.length) % FLASHCARDS.length; renderCard();
+});
+document.getElementById('fcShuffle').addEventListener('click', ()=>{
+  fcOrder = shuffle(fcOrder); fcIndex = 0; renderCard();
+});
+document.querySelectorAll('#fcLevelBar .level-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#fcLevelBar .level-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    fcLevel = btn.dataset.level;
+    FLASHCARDS = FLASHCARD_SETS[fcLevel];
+    fcOrder = FLASHCARDS.map((_,i)=>i);
+    fcIndex = 0;
+    setFcTotalLabel();
+    renderCard();
+  });
+});
+setFcTotalLabel();
+renderCard();
+
+/* ================= QUIZ — level-aware runtime ================= */
+const QUIZ_SETS = {easy:shuffle(EASY_QUIZ), medium:shuffle(MEDIUM_QUIZ), hard:shuffle(HARD_QUIZ)};
+let quizLevel = 'easy';
+let ALL_QUIZ = QUIZ_SETS[quizLevel];
+
+const quizSub = document.getElementById('quizSub');
+function setQuizSub(){
+  quizSub.textContent = `${ALL_QUIZ.length} questions. The correct answer moves to a new position each time.`;
+}
+
+let quizIndex = 0;
+let quizScore = 0;
+let answered = false;
+
+const quizQ = document.getElementById('quizQ');
+const quizOptions = document.getElementById('quizOptions');
+const quizProgress = document.getElementById('quizProgress');
+const quizScoreEl = document.getElementById('quizScore');
+const quizNextBtn = document.getElementById('quizNext');
+
+function renderQuiz(){
+  answered = false;
+  quizNextBtn.disabled = true;
+  const q = ALL_QUIZ[quizIndex];
+  quizQ.textContent = q.question;
+  quizProgress.textContent = `Question ${quizIndex+1} of ${ALL_QUIZ.length}`;
+  quizScoreEl.textContent = `Score: ${quizScore}`;
+  const opts = shuffle([{text:q.correct, ok:true}, ...q.distractors.map(d=>({text:d, ok:false}))]);
+  quizOptions.innerHTML = '';
+  opts.forEach(opt=>{
+    const b = document.createElement('button');
+    b.className='quiz-opt';
+    b.textContent = opt.text;
+    b.addEventListener('click', ()=>{
+      if(answered) return;
+      answered = true;
+      quizNextBtn.disabled = false;
+      document.querySelectorAll('.quiz-opt').forEach(x=>x.disabled = true);
+      if(opt.ok){
+        b.classList.add('correct');
+        quizScore++;
+      } else {
+        b.classList.add('wrong');
+        const correctBtn = [...document.querySelectorAll('.quiz-opt')].find(x=>x.textContent===q.correct);
+        if(correctBtn) correctBtn.classList.add('correct');
+      }
+      quizScoreEl.textContent = `Score: ${quizScore}`;
+    });
+    quizOptions.appendChild(b);
+  });
+}
+quizNextBtn.addEventListener('click', ()=>{
+  quizIndex = (quizIndex+1) % ALL_QUIZ.length;
+  renderQuiz();
+});
+document.getElementById('quizRestart').addEventListener('click', ()=>{
+  QUIZ_SETS[quizLevel] = shuffle(ALL_QUIZ);
+  ALL_QUIZ = QUIZ_SETS[quizLevel];
+  quizIndex = 0; quizScore = 0;
+  renderQuiz();
+});
+document.querySelectorAll('#quizLevelBar .level-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#quizLevelBar .level-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    quizLevel = btn.dataset.level;
+    ALL_QUIZ = QUIZ_SETS[quizLevel];
+    quizIndex = 0; quizScore = 0;
+    setQuizSub();
+    renderQuiz();
+  });
+});
+setQuizSub();
+renderQuiz();
+</script>
+</body>
+</html>
